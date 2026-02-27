@@ -1,0 +1,132 @@
+<div class="bg-white p-4 shadow rounded-4" id="tbl-partido">
+    <div class="table-responsive">
+        <div class="mb-3">
+            <button title="Nuevo" class="btn btn-sm btn-primary"
+                    hx-get="{% url 'partidos:partido:crear' %}"
+                    hx-target="#modals-here"
+                    hx-trigger="click"
+                    hx-swap="innerHtml transition:true"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modals-here"
+            ><i class="bi bi-file"></i></button>
+        </div>
+        <table class="table  table-bordered table-hover ">
+            <thead class="table-light">
+            <tr>
+                <th>Código</th>
+                <th>Equipo Local</th>
+                <th>Equipo Visita</th>
+                <th>Fecha</th>
+                <th>Lugar</th>
+                <th>Tribunas</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for partido in page_obj %}
+                <tr>
+                    <td>{{ partido.codigo }}</td>
+                    <td>{{ partido.equipo_local }}</td>
+                    <td>{{ partido.equipo_visitante }}</td>
+                    <td>{{ partido.fecha|default:"d/m/Y" }}</td>
+                    <td>{{ partido.lugar }}</td>
+                    <td style="width: 200px">
+                        <table class="table border-0">
+                            <tbody>
+                            {% for tribuna in partido.partidostribuna_set.all %}
+                                <tr>
+                                    <td>
+                                        {{ tribuna.tribuna }}
+                                    </td>
+                                    <td><span class="badge bg-primary">{{ tribuna.cantidad }}</span></td>
+                                    <td><span class="badge bg-secondary">{{ tribuna.cantidad_cortesia }}</span><br></td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <button title="Detalle Partido"
+                                    hx-get="{% url 'partidos:partido:detalle' partido.id %}"
+                                    hx-target="#tbl-partido"
+                                    hx-trigger="click"
+                                    hx-swap="outerHTML transition:true"
+                                    class="btn btn-sm btn-outline-primary"><i class="bi bi-list-columns"></i></button>
+                            <button title="Editar"
+                                    hx-get="{% url 'partidos:partido:editar' partido.id %}"
+                                    hx-target="#modals-here"
+                                    hx-trigger="click"
+                                    hx-swap="innerHtml transition:true"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modals-here"
+                                    class="btn btn-sm btn-info"><i class="bi bi-pencil"></i></button>
+                            <button title="Eliminar"
+                                    hx-get="{% url 'partidos:partido:eliminar' partido.id %}"
+                                    hx-target="#modals-here"
+                                    hx-trigger="click"
+                                    hx-swap="innerHtml transition:true"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modals-here"
+                                    class="btn btn-sm btn-danger"><i class="bi bi-eraser"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" aria-label="First"
+                           hx-get="{% url 'partidos:partido:lista' %}?page=1"
+                           hx-trigger="click"
+                           hx-target="#tbl-partido"
+                           hx-swap="outerHTML">
+                            &laquo; Primero
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Previous"
+                           hx-get="{% url 'partidos:partido:lista' %}?page={{ page_obj.previous_page_number }}"
+                           hx-trigger="click"
+                           hx-target="#tbl-partido"
+                           hx-swap="outerHTML">
+                            Anterior
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+      <span class="page-link">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+      </span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Next"
+                           hx-get="{% url 'partidos:partido:lista' %}?page={{ page_obj.next_page_number }}"
+                           hx-trigger="click"
+                           hx-target="#tbl-partido"
+                           hx-swap="outerHTML">
+                            Siguiente
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Last"
+                           hx-get="{% url 'partidos:partido:lista' %}?page={{ page_obj.paginator.num_pages }}"
+                           hx-trigger="click"
+                           hx-target="#tbl-partido"
+                           hx-swap="outerHTML">
+                            Último &raquo;
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</div>
+
+

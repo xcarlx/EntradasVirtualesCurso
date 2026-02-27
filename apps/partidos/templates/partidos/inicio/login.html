@@ -1,0 +1,77 @@
+{% extends 'EntradasVirtuales/base.html' %}
+{% load static %}
+{% block estilos %}
+    <style>
+        body {
+            background: linear-gradient(135deg, #2C2E3F, #003399);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card h3 {
+            font-weight: bold;
+            color: #2C2E3F;
+        }
+
+        .btn-custom {
+            background-color: #2C2E3F;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #003399;
+            color: #fff;
+        }
+
+        .logo {
+            width: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .errorlist.nonfield {
+            color: red;
+        }
+
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+
+{% endblock %}
+{% block content-menu %}
+
+{% endblock %}
+
+{% block cuerpo %}
+    <div class="row justify-content-end">
+        <div class="login-card text-center">
+            <!-- Logo del equipo -->
+            <img src="{% static 'EntradasVirtuales/img/logo_fc.png' %}" alt="Logo FC CAJAMARCA" class="logo">
+            <h3>FC CAJAMARCA</h3>
+            <p class="text-muted">Acceso al sistema institucional</p>
+            <form class="text-start" method="POST" action="{% url 'partidos:login:login' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-custom w-100">Ingresar</button>
+            </form>
+            <div class="mt-3">
+                <a href="#" class="text-decoration-none text-muted">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

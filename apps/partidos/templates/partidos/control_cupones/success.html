@@ -1,0 +1,23 @@
+<div id="id_mensaje" class="text-center g-3">
+    {% if existe %}
+        <i class="bi bi-check text-success display-1"></i>
+        <h3>Operación exitosa</h3>
+        {% if cupon.fecha_uso is not None %}
+            <a href="{% url 'partidos:cupones:ticket-pdf' cupon.codigo_uuid %}" class="btn btn-info">Descargar Entrada
+                Virtual</a>
+        {% endif %}
+    {% else %}
+        <i class="bi bi-x text-danger display-1"></i>
+        <br>
+        <h3>Código inválido o usado</h3>
+    {% endif %}
+</div>
+{% if existe and cupon.fecha_uso is None %}
+    <div class="" hx-get="{% url 'partidos:control_cupones:canjear-cupon' cupon.pk %}"
+         hx-trigger="load delay:1.5s"
+         hx-target="#id_mensaje"
+         hx-swap="outerHTML">
+
+    </div>
+{% endif %}
+

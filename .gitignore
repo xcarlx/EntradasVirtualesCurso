@@ -1,0 +1,10 @@
+.venv
+db.sqlite3
+node_modules
+__pycache__
+.idea
+package-lock.json
+migrations
+media
+staticfiles
+*.pyc

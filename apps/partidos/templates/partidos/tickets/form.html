@@ -1,0 +1,33 @@
+<form
+        id="formPartido"
+        {% if not form.instance.pk %}
+        hx-post="{% url 'partidos:tickets:agregar' pk %}"
+        {% endif %}
+        hx-trigger="submit"
+        hx-target="#modals-here"
+        hx-swap="innerHtml transition:true"
+        hx-indicator="#spinner-lading"
+        autocomplete="off"
+>
+    <div class="modal-dialog modal-dialog slide-it">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Agregar Tickets
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form.non_field_errors }}
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+            <div class="modal-footer">
+                <button
+                        type="submit" class="btn btn-primary">Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+

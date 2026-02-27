@@ -1,0 +1,14 @@
+<form method="post" class="form-horizontal"
+      hx-post="{% url 'partidos:control_cupones:canjear-cupon' cupones.pk %}"
+      hx-swap="innerHTML"
+      hx-trigger="submit"
+      autocomplete="off"
+>
+
+    <div class="col-lg-8 offset-lg-2 col-md-12">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="col-12 btn btn-amarillo">Canjear entrada</button>
+    </div>
+
+</form>

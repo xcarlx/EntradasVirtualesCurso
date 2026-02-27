@@ -1,0 +1,10 @@
+<div id="contenedor">
+    <h3>Partidos</h3>
+    <hr>
+    <div id="tbl-partido" hx-get="{% url 'partidos:partido:lista' %}"
+         hx-trigger="load"
+         hx-swap="innerHTML">
+    </div>
+</div>
+
+

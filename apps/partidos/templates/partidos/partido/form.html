@@ -1,0 +1,41 @@
+<form
+        id="formPartido"
+        {% if not form.instance.pk %}
+        hx-post="{% url 'partidos:partido:crear' %}"
+        {% else %}
+        hx-post="{% url 'partidos:partido:editar' form.instance.pk %}"
+        {% endif %}
+        hx-trigger="submit"
+        hx-target="#modals-here"
+        hx-swap="innerHtml transition:true"
+        method="POST"
+        enctype="multipart/form-data"
+        hx-indicator="#spinner-lading"
+        autocomplete="off"
+>
+    <div class="modal-dialog modal-dialog slide-it">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    {% if not form.instance.pk %}
+                        Agregar
+                    {% else %}
+                        Editar
+                    {% endif %}
+                    Partido
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+            <div class="modal-footer">
+                <button
+                        type="submit" class="btn btn-primary">Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+

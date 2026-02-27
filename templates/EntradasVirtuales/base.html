@@ -1,0 +1,275 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FC Cajamarca</title>
+    <link rel="icon" href="{% static 'EntradasVirtuales/img/icono_fc.ico' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Viga&display=swap"
+          rel="stylesheet">
+    <link href="{% static 'EntradasVirtuales/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'EntradasVirtuales/bootstrap-icons/font/bootstrap-icons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'EntradasVirtuales/css/fonts_google.css' %}" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+
+    <link rel="stylesheet" href="{% static 'EntradasVirtuales/sweetalert2/dist/sweetalert2.css' %}">
+    <link rel="stylesheet" href="{% static 'EntradasVirtuales/sweetalert2/themes/bootstrap-5.css' %}">
+    <script src="{% static 'EntradasVirtuales/sweetalert2/dist/sweetalert2.all.js' %}"></script>
+
+    <script src="{% static 'EntradasVirtuales/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'EntradasVirtuales/htmx/dist/htmx.min.js' %}"></script>
+    <style>
+        body {
+            background: #f4f6f9;
+            font-family: "Barlow", sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+
+        .sidebar {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #2C2E3F, #003399);
+            color: #fff;
+            padding-top: 1rem;
+        }
+
+        .sidebar-2 {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #FB9600, #780B0A);
+            color: #fff;
+            padding-top: 1rem;
+        }
+
+        .sidebar .nav-link {
+            color: #fff;
+            font-weight: 500;
+            margin: 0.3rem 0;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .sidebar .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar .nav-link.active {
+            background: #F6DB28;
+            font-weight: 600;
+            color: #000000;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 8px;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header img {
+            width: 70px;
+            margin-bottom: 0.5rem;
+        }
+
+        .errorlist.nonfield {
+            color: red;
+        }
+
+        .errorlist {
+            color: red;
+        }
+    </style>
+    <style>
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fade-out {
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes slide-from-right {
+            from {
+                transform: translateX(90px);
+            }
+        }
+
+        @keyframes slide-to-left {
+            to {
+                transform: translateX(-90px);
+            }
+        }
+
+        .slide-it {
+            view-transition-name: slide-it;
+        }
+
+        ::view-transition-old(slide-it) {
+            animation: 180ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+            600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+        }
+
+        ::view-transition-new(slide-it) {
+            animation: 420ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+            600ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+        }
+
+        .btn-amarillo {
+            --bs-btn-color: #000;
+            --bs-btn-bg: #F6DB28;
+            --bs-btn-border-color: #2C2E3F;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #2C2E3F;
+            --bs-btn-hover-border-color: #F6DB28;
+            --bs-btn-focus-shadow-rgb: 49, 132, 253;
+            --bs-btn-active-color: #000;
+            --bs-btn-active-bg: #F6DB28;
+            --bs-btn-active-border-color: #F6DB28;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #000;
+            --bs-btn-disabled-bg: #F6DB28;
+            --bs-btn-disabled-border-color: #F6DB28;
+        }
+    </style>
+
+    {% block estilos %}
+
+    {% endblock %}
+</head>
+<body>
+<div id="spinner-lading" class="htmx-indicator position-fixed h-100 w-100 bg-body-tertiary bg-opacity-10"
+     style="z-index: 2000">
+    <div class="position-relative h-100">
+        <div class="position-absolute top-50 start-50 translate-middle text-primary">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block container %}
+
+    <div class="container-fluid">
+
+        <div class="row">
+            {% block content-menu %}
+                <nav class="col-12 col-md-3 col-lg-2 sidebar d-flex flex-column">
+                    <div class="sidebar-header">
+                        <img src="{% static 'EntradasVirtuales/img/logo_fc.png' %}" alt="Logo FC Cajamarca">
+                        <h5>FC CAJAMARCA</h5>
+                    </div>
+                    <nav class="nav flex-column px-3" id="menu">
+                        <a href="javascript:void(0)"
+                           hx-get="{% url 'partidos:control_tickets:home' %}"
+                           hx-trigger="click"
+                           hx-target="#contenedor"
+                           hx-swap="innerHtml transition:true"
+                           class="nav-link">
+                            <i class="bi bi-ticket-detailed-fill"></i> Control Tickets
+                        </a>
+                        <a href="javascript:void(0)"
+                           hx-get="{% url 'partidos:partido:home' %}"
+                           hx-trigger="click"
+                           hx-target="#contenedor"
+                           hx-swap="innerHtml transition:true"
+                           class="nav-link">
+                            <i class="bi bi-dribbble"></i> Partidos
+                        </a>
+
+                        {#                    <a href="#" class="nav-link"><i class="bi bi-people-fill"></i> Plantel</a>#}
+                        {#                    <a href="#" class="nav-link"><i class="bi bi-calendar-event-fill"></i> Partidos</a>#}
+                        {#                    <a href="#" class="nav-link"><i class="bi bi-ticket-perforated-fill"></i> Tickets</a>#}
+                        {#                    <a href="#" class="nav-link"><i class="bi bi-bar-chart-fill"></i> Estadísticas</a>#}
+                        {#                    <a href="#" class="nav-link"><i class="bi bi-gear-fill"></i> Configuración</a>#}
+                        <a href="{% url 'partidos:login:logout' %}" class="nav-link "><i
+                                class="bi bi-box-arrow-right"></i>
+                            Salir</a>
+                    </nav>
+                </nav>
+
+
+            {% endblock %}
+
+            <!-- Content -->
+            <main class="col-12 col-md-9 col-lg-10 p-5 ">
+                {% block cuerpo %}
+                    <div id="contenedor">
+
+                    </div>
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+{% endblock %}
+
+<script>
+    // Script para activar el menú seleccionado
+    const links = document.querySelectorAll('#menu .nav-link');
+    links.forEach(link => {
+        link.addEventListener('click', function () {
+            links.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+            const contenedor = document.querySelector('#contenedor');
+            if (contenedor) {
+
+            }
+        });
+    });
+
+</script>
+{% csrf_token %}
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function fetch_post(url, data) {
+        const csrftoken = getCookie('csrftoken');
+        return new Request(url,
+            {
+                method: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                mode: 'same-origin', // Do not send CSRF token to another domain.
+                body: data
+            }
+        );
+    }
+
+</script>
+
+{% block scripts %}
+
+{% endblock %}
+<div id="modals-here"
+     class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content smooth"></div>
+    </div>
+</div>
+</body>
+</html>

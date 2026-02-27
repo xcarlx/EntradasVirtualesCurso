@@ -1,0 +1,27 @@
+<div class="modal-dialog modal-dialog slide-it">
+    <form
+            id="formPartido"
+            hx-post="{% url 'partidos:partido:eliminar' object.pk %}"
+            hx-target="#modals-here"
+            hx-trigger="submit"
+            hx-swap="innerHtml transition:true"
+    >
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Eliminar Partido
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                {{ object }}
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+            <div id="modal-resultado"></div>
+        </div>
+    </form>
+</div>

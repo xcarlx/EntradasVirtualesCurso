@@ -1,0 +1,28 @@
+<div class="modal-dialog modal-dialog slide-it">
+    <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">
+                Success
+            </h5>
+            <button
+                    hx-get="{% url 'partidos:tribunas:lista' pk %}"
+                    hx-trigger="click"
+                    hx-target="#tblTabContent"
+                    hx-swap="outerHTML transition:true"
+                    type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+            <i class="bi bi-check text-success display-1"></i>
+            <h3>Operación exitosa</h3>
+        </div>
+        <div class="modal-footer">
+            <button
+                    id="tbl-partido" hx-get="{% url 'partidos:tribunas:lista' pk %}"
+                    hx-trigger="click"
+                    hx-target="#tblTabContent"
+                    hx-swap="outerHTML transition:true"
+                    type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir
+            </button>
+        </div>
+    </div>
+</div>

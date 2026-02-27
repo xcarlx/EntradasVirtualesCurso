@@ -1,0 +1,33 @@
+{% extends 'EntradasVirtuales/base.html' %}
+{% load static %}
+{% block container %}
+    <div class="container my-4 py-3 rounded-3 border shadow-lg py-3 sidebar-2">
+        <div class="row ">
+            <div class="col text-center">
+                <img class="img-fluid" width="350px" src="{% static 'EntradasVirtuales/img/logo-cajatikets-.png' %}" alt="">
+{#                <h1 class="display-5 viga-regular">FC CAJAMARCA</h1>#}
+            </div>
+        </div>
+
+        <div class="row mx-3">
+            <div class="col-md-6 offset-md-3">
+                <div class="text-center">
+                    <h3>Canjea tu entrada</h3>
+                </div>
+                <form
+                        hx-post="{% url 'partidos:control_cupones:vista' %}"
+                        hx-swap="outerHTML"
+                        hx-trigger="submit"
+                        method="POST"
+                        autocomplete="off">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="text-center">
+                        <button class="btn btn-lg btn-amarillo col-12"><span class="bi-check"></span> Validar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

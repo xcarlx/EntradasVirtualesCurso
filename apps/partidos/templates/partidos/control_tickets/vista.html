@@ -1,0 +1,122 @@
+<div id="contenedor">
+    <div>
+        <h3>Control de Tickets</h3>
+    </div>
+    <hr>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 gy-3 my-3">
+        <div class="col">
+            <label for="code" class="col-form-label col-12">
+                <div class="card shadow bg-warning">
+                    <div class="card-body text-center">
+                        <span class="bi-qr-code fs-1"></span>
+                        <h5 class="card-title">Código QR</h5>
+                        <input class="form-check-input" type="radio" name="qrcode" id="code" value="code" checked>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="col">
+            <label for="barcode" class="col-form-label col-12">
+                <div class="card shadow bg-info">
+                    <div class="card-body text-center">
+                        <span class="material-symbols-outlined" style="font-size: 50px;">barcode</span>
+                        <h5 class="card-title">Código Barras</h5>
+                        <input minlength="8" class="form-check-input" type="radio" name="qrcode" id="barcode"
+                               value="barcode">
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+
+
+    <div class="row row-cols-1 py-4 px-3 border rounded shadow-lg">
+        <div class="col-md-4 offset-md-4 ">
+
+            <label for="codigoQR" class="form-label fw-bold">Código QR</label>
+            <div class="input-group">
+                <span class="input-group-text bg-success text-white">
+                  <i class="bi bi-qr-code-scan"></i>
+                </span>
+                <input id="buscarTicket" type="search" class="form-control form-control-lg" autofocus
+                       aria-label="Agregar Ticket"
+                       aria-describedby="basic-addon1"
+                       autocomplete="off"
+                       placeholder="Escanee o ingrese el código QR"
+                       hx-get="{% url 'partidos:control_tickets:lista' %}"
+                       hx-trigger="keyup[key=='Enter'] delay:500"
+                       hx-target="#tblTickets"
+                       hx-swap="outerHTML">
+            </div>
+        </div>
+    </div>
+    <div class="row my-5 border rounded-3 shadow bg-white  gy-1">
+        <div id="contentTable" class="col pt-3 px-3">
+            <div id="tblTickets"
+                 hx-get="{% url 'partidos:control_tickets:lista' %}"
+                 hx-trigger="load delay:1s"
+                 hx-swap="outerHTML"></div>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    const txtBuscarTicket = document.querySelector('#buscarTicket')
+    if (txtBuscarTicket) {
+        txtBuscarTicket.onkeyup = (event) => {
+            if (event.key === 'Enter') {
+                if (validarInputTicket(event.target.value)) {
+                    buscarTicket(event.target.value)
+                    txtBuscarTicket.value = null;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Formato inválido',
+                        text: 'Error al ingresar el codigo',
+                        confirmButtonColor: '#dc3545'
+                    });
+                }
+            }
+        }
+    }
+
+    async function buscarTicket(valor) {
+        let formData = new FormData();
+        formData.append('codigo', valor);
+        formData.append('csrfmiddlewaretoken', '{{  csrf_token }}');
+        const resultado = await fetch(fetch_post("{% url 'partidos:control_tickets:validar' %}", formData))
+            .then(res => res.json()).catch(() => {
+                return {
+                    "status": false,
+                    "error": "error",
+                    "mensaje": "Error código incorrecto",
+                }
+            })
+        if (resultado.status) {
+            {#const datos_tabla = await fetch("{% url 'partidos:control_tickets-lista' %}").then(res => res.text())#}
+            {#const content_tabla = document.querySelector("#contentTable");#}
+            {#content_tabla.innerHTML = datos_tabla;#}
+
+            Swal.fire({
+                title: `Ticket válido`,
+                icon: 'success',
+                text: `${valor}`,
+                confirmButtonColor: '#dc3545'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `${resultado.mensaje}`,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+
+        {#fetch('{% url 'partidos:control_tickets-validar' %}',)#}
+    }
+
+    function validarInputTicket(value) {
+        const regex = /^[A-Za-z0-9]+$/;
+        return regex.test(value);
+    }
+</script>

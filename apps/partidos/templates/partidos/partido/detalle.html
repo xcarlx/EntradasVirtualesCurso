@@ -1,0 +1,80 @@
+<div class="bg-white p-4 shadow rounded-4" id="tbl-partido">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-sm btn-warning"
+                    hx-get="{% url 'partidos:partido:home' %}"
+                    hx-trigger="click"
+                    hx-target="#contenedor"
+                    hx-swap="innerHtml transition:true"
+            >
+                <i class="bi-arrow-left"></i> Atrás
+            </button>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5 text-md-end text-center"><h1>{{ partidos.equipo_local }}</h1><span>Equipo local</span>
+        </div>
+        <div class="col-md-2 text-md-center text-center"><h1>VS</h1></div>
+        <div class="col-md-5 text-md-start text-center"><h1>{{ partidos.equipo_visitante }}</h1>
+            <span>Equipo visitante</span></div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <span class="fs-4">{{ partidos.fecha }}</span><br>
+            <span class="fs-4 barlow-bold">{{ partidos.horas|date:"h:i a" }}</span>
+        </div>
+    </div>
+    <hr>
+    <nav id="tabPartido" class="mb-3" role="tablist">
+        <div class="nav nav-pills flex-column flex-sm-row" id="nav-tab" role="tablist">
+            <button
+                    hx-get="{% url 'partidos:tribunas:lista' partidos.id %}"
+                    hx-trigger="click"
+                    hx-swap="outerHTML"
+                    hx-target="#tblTabContent"
+                    class="flex-sm-fill text-sm-center nav-link" data-bs-toggle="pill" data-bs-target="#tabContenedor"
+                    type="button" role="tab" aria-controls="tabContenedor" aria-selected="true">Tribunas
+            </button>
+            <button
+                    hx-get="{% url 'partidos:cupones:lista' partidos.id %}"
+                    hx-trigger="click"
+                    hx-swap="outerHTML"
+                    hx-target="#tblTabContent"
+                    class="flex-sm-fill text-sm-center nav-link" data-bs-toggle="pill" data-bs-target="#tabContenedor"
+                    type="button" role="tab" aria-controls="tabContenedor" aria-selected="true">Cupones
+            </button>
+            <button
+                    hx-get="{% url 'partidos:tickets:lista' partidos.id %}"
+                    hx-trigger="click"
+                    hx-swap="outerHTML"
+                    hx-target="#tblTabContent"
+                    class="flex-sm-fill text-sm-center nav-link" data-bs-toggle="pill" data-bs-target="#tabContenedor"
+                    type="button" role="tab" aria-controls="tabContenedor" aria-selected="true">Tickets
+            </button>
+        </div>
+
+    </nav>
+
+    <div id="tabContenedor" class="tab-content m-4 fade">
+        <div class="tab-pane fade show active" id="tblTabContent" role="tabpanel" aria-labelledby="home-tab"
+             tabindex="0">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+    {#var triggerTabList = document.querySelectorAll('#tabPartido a')#}
+    {#triggerTabList.forEach(triggerEl => {#}
+    {#    var tabTrigger = new bootstrap.Tab(triggerEl)#}
+    {##}
+    {#    triggerEl.addEventListener('click', event => {#}
+    {#        event.preventDefault()#}
+    {#        tabTrigger.show()#}
+    {#    })#}
+    {# })#}
+</script>
