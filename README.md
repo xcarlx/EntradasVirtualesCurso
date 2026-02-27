@@ -12,10 +12,10 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ## 🚀 Instalación y Configuración
 
-### 1. Descomprimir
+### 1. Clonar el Repositorio
 
 ```bash
-descomprimir EntradasVirtuales.zip
+git clone https://github.com/tu-usuario/EntradasVirtuales.git
 cd EntradasVirtuales
 ```
 ### 2. Crear y Activar Entorno Virtual  
